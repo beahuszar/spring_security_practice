@@ -14,7 +14,7 @@ import java.io.IOException;
 public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
 //will be filtering out the URLs
   public JwtAuthenticationTokenFilter( ) {
-    super("**/rest/**"); //to make it applicable for all the endpoints
+    super("/rest/**"); //to make it applicable for all the endpoints
   }
 
   @Override

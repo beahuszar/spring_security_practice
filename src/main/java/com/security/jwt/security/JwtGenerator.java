@@ -4,7 +4,9 @@ import com.security.jwt.model.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JwtGenerator {
 
   //this funtion returns the JSON web token for us
