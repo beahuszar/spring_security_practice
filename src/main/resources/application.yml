@@ -2,6 +2,7 @@ management:
   security:
     enabled: true
 
+
 spring:
   resources:
     chain:

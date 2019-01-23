@@ -18,12 +18,8 @@ import java.util.List;
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
   //all the major processing is executed here
   //this is where the class is authenticated
-  private JwtValidator validator;
-
   @Autowired
-  public JwtAuthenticationProvider(JwtValidator validator) {
-    this.validator = validator;
-  }
+  private JwtValidator validator;
 
   @Override
   protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
@@ -34,7 +30,6 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
   protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken) throws AuthenticationException {
     //username is not always required like in this case
     JwtAuthenticationToken jwtAuthenticationToken = (JwtAuthenticationToken) usernamePasswordAuthenticationToken;
-
     String token = jwtAuthenticationToken.getToken();
 
     JwtUser jwtUser =  validator.validate(token); //to decode
@@ -45,7 +40,6 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 
     List<GrantedAuthority> grantedAuthorities = AuthorityUtils
         .commaSeparatedStringToAuthorityList(jwtUser.getRole());
-
     return new JwtUserDetails(jwtUser.getUserName(), jwtUser.getId(),
         token,
         grantedAuthorities); //POJO

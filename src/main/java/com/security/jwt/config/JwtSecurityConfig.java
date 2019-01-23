@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Collections;
@@ -23,19 +22,16 @@ import java.util.Collections;
 @EnableWebSecurity
 @Configuration
 public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
-  private JwtAuthenticationProvider authenticationProvider;
-  private JwtAuthenticationEntryPoint entryPoint;
-
   @Autowired
-  public JwtSecurityConfig(JwtAuthenticationProvider authenticationProvider, JwtAuthenticationEntryPoint entryPoint) {
-    this.authenticationProvider = authenticationProvider;
-    this.entryPoint = entryPoint;
-  }
+  private JwtAuthenticationProvider authenticationProvider;
+  @Autowired
+  private JwtAuthenticationEntryPoint entryPoint;
 
   @Bean
   public AuthenticationManager authenticationManager() {
     return new ProviderManager(Collections.singletonList(authenticationProvider));
   }
+
   @Bean
   public JwtAuthenticationTokenFilter authenticationTokenFilter() {
     JwtAuthenticationTokenFilter filter = new JwtAuthenticationTokenFilter();
@@ -54,7 +50,6 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.addFilterBefore(authenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
     http.headers().cacheControl();
   }
 }

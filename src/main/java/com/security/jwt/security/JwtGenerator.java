@@ -20,10 +20,10 @@ public class JwtGenerator {
 
 
 
-        Jwts.builder()
+    return Jwts.builder()
         .setClaims(claims)
             .signWith(SignatureAlgorithm.HS512, "youtube")
             .compact(); //to avoid lengthy token
-    return null;
+
   }
 }
