@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
-//will be filtering out the URLs
+//This class is the entry point of our JWT authentication process
+//extracts the JWT token from the request headers and delegates authentication to the injected AuthenticationManager
+// If the token is not found, an exception is thrown that stops the request from processing.
+//successful auth - to override default spring flow not to stop the filter
+
   public JwtAuthenticationTokenFilter( ) {
     super("/rest/**"); //to make it applicable for all the endpoints
   }
@@ -37,6 +41,14 @@ public class JwtAuthenticationTokenFilter extends AbstractAuthenticationProcessi
   @Override //proceed with the next chain because we have a different filter
   protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
     super.successfulAuthentication(request, response, chain, authResult);
-    chain.doFilter(request, response); //go to the next filter so that we dont have to block any request
+
+    // As this authentication is in HTTP header, after success we need to continue the request normally
+    // and return the response as if the resource was not secured at all
+    chain.doFilter(request, response);
+  }
+
+  @Override
+  protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
+    return true;
   }
 }

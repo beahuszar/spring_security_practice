@@ -18,6 +18,13 @@ import java.util.List;
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
   //all the major processing is executed here
   //this is where the class is authenticated
+  //Spring’s default AuthenticationManager is used here with our authProvider
+  //AbstractUserDetailsAuthenticationProvider requires us to return UserDetails based on the authentication request
+  //User details are wrapped in the JwtAuthenticationToken class
+  //invalid token - exception
+  //valid token & decryption by JwtValidator - user details extracted from token withou need of DB
+
+
   @Autowired
   private JwtValidator validator;
 

@@ -8,8 +8,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JwtGenerator {
-
-  //this funtion returns the JSON web token for us
+//in charge of parsing the token into User object and generating the token from the User object
+//uses the jjwt library
+//We could also store more arbitrary stuff and add more security features, such as the token’s expiration
+  
+  //this function returns the JSON web token for us
   public String generate(JwtUser jwtUser) {
 
     //set expiry date can be used, but this one is an infinite token

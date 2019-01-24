@@ -12,6 +12,7 @@ import java.io.IOException;
 public class JwtSuccessHandler implements AuthenticationSuccessHandler {
   @Override
   public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    // We do not need to do anything extra on REST authentication success, because there is no page to redirect to
     System.out.println("Successfully authenticated");
   }
 }
